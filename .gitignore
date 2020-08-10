@@ -21,11 +21,10 @@ npm-debug.log*
 /.vscode
 /coverage
 
-# myApp
-/myApp/.sourcemaps
-/myApp/package-lock.json
-/myApp/dist
-/myApp/node_modules
-/myApp/platforms
-/myApp/plugins
-/myApp/www
+.sourcemaps
+package-lock.json
+dist
+node_modules
+platforms
+plugins
+www

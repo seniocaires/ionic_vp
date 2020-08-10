@@ -18,8 +18,8 @@ docker run -it --rm -v $(pwd):/app -p 8100:8100 -p 8000:8000 -p 3000:3000 --name
 ```
 
 ```
-docker exec -it ionic_vp_desenvolvimento bash -c "cd myApp && ionic cordova run browser -livereload"
-docker exec -it ionic_vp_desenvolvimento bash -c "cd myApp && npm run servidor"
+docker exec -it ionic_vp_desenvolvimento bash -c "ionic cordova run browser -livereload"
+docker exec -it ionic_vp_desenvolvimento bash -c "npm run servidor"
 ```
 
 Acessar http://localhost:8100
