@@ -10,6 +10,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { SobrePage } from '../pages/sobre/sobre';
 import { TutoriaisPage } from '../pages/tutoriais/tutoriais';
+import { ProductsHttpProvider } from '../providers/products-http/products-http';
+import { ProductsListPage } from '../pages/products-list/products-list';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -17,10 +20,12 @@ import { TutoriaisPage } from '../pages/tutoriais/tutoriais';
     HomePage,
     ListPage,
     SobrePage,
-    TutoriaisPage
+    TutoriaisPage,
+    ProductsListPage
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp),
   ],
   bootstrap: [IonicApp],
@@ -29,12 +34,14 @@ import { TutoriaisPage } from '../pages/tutoriais/tutoriais';
     HomePage,
     ListPage,
     SobrePage,
-    TutoriaisPage
+    TutoriaisPage,
+    ProductsListPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: ErrorHandler, useClass: IonicErrorHandler }
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    ProductsHttpProvider
   ]
 })
 export class AppModule { }
