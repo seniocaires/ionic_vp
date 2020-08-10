@@ -1,0 +1,51 @@
+# --------------------------------------------------------
+# INSTALAÇÃO JAVA
+# --------------------------------------------------------
+FROM openjdk:8-jdk
+
+# --------------------------------------------------------
+# INSTALAÇÃO NODE
+# --------------------------------------------------------
+
+ENV NODEJS_VERSION=8.17.0 \
+    PATH=$PATH:/opt/node/bin
+
+RUN apt-get -qq update && \
+    apt-get -qq install -y curl ca-certificates --no-install-recommends && \
+    mkdir -p /opt/node && \
+    cd /opt/node && \
+    curl -sL https://nodejs.org/dist/v${NODEJS_VERSION}/node-v${NODEJS_VERSION}-linux-x64.tar.gz | tar xz --strip-components=1
+
+# --------------------------------------------------------
+# INSTALAÇÃO ANDROID SDK
+# --------------------------------------------------------
+
+ENV ANDROID_SDK_URL="https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz" \
+    ANDROID_BUILD_TOOLS_VERSION=28.0.3 \
+    ANDROID_APIS="android-28" \
+    ANDROID_HOME="/opt/android-sdk-linux"
+ENV PATH $PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/$ANDROID_BUILD_TOOLS_VERSION:$ANT_HOME/bin:$MAVEN_HOME/bin:$GRADLE_HOME/bin
+
+RUN dpkg --add-architecture i386 && \
+    apt-get -qq update && \
+    apt-get -qq install -y curl libstdc++6:i386 zlib1g:i386 --no-install-recommends && \
+    curl -sL ${ANDROID_SDK_URL} | tar xz -C /opt && \
+    echo y | android update sdk -a -u -t platform-tools,${ANDROID_APIS},build-tools-${ANDROID_BUILD_TOOLS_VERSION} && \
+    chmod a+x -R $ANDROID_HOME && \
+    chown -R root:root $ANDROID_HOME
+
+# --------------------------------------------------------
+# INSTALAÇÃO GRADLE
+# --------------------------------------------------------
+
+ENV GRADLE_VERSION=5.0
+ENV GRADLE_HOME=/opt/gradle/gradle-${GRADLE_VERSION}
+ENV PATH=${GRADLE_HOME}/bin:${PATH}
+RUN curl -sL https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip -o /tmp/gradle-${GRADLE_VERSION}-bin.zip && \ 
+    unzip /tmp/gradle-${GRADLE_VERSION}-bin.zip -d /opt/gradle && \
+    rm -f /tmp/gradle-${GRADLE_VERSION}-bin.zip
+
+WORKDIR /app
+
+RUN npm install -g ionic@3.20 cordova@9.0.0 --save-exact 
+
