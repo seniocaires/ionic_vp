@@ -13,11 +13,13 @@ docker build -f Dockerfile-desenvolvimento -t ionic_vp_desenvolvimento .
 Execute o container
 
 ```
-docker run -it --rm -v $(pwd):/app -p 8100:8100 -p 8000:8000 ionic_vp_desenvolvimento bash
+docker run -it --rm -v $(pwd):/app -p 8100:8100 -p 8000:8000 -p 3000:3000 --name ionic_vp_desenvolvimento ionic_vp_desenvolvimento bash
 
-cd {PATH_PROJETO}
+```
 
-ionic cordova run browser -livereload
+```
+docker exec -it ionic_vp_desenvolvimento bash -c "cd myApp && ionic cordova run browser -livereload"
+docker exec -it ionic_vp_desenvolvimento bash -c "cd myApp/server && node server.js"
 ```
 
 Acessar http://localhost:8100
